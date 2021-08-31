@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div id="app">
+<h1>Ciao <span v-model="user_name">{{username}}</span></h1>
+<br>
+<h2>Seleziona la data:</h2>
+  <br>
+    <form @submit.prevent="getUpdates">
+        <input type="date" v-model="date.day"/>
+        <input type="submit"/>
+    </form>
+    
+<br>
+<h2>Aggiornamenti odierni</h2>
+<br>
+<h3>Avvisi:</h3>
+<div v-if="updates[0].length" >
+<div class="card mb-2" v-for="notice, index in updates[0]">
+    <div class="card-body" >
+        [[notice.titolo]]
+    </div>
+    <button type="button" class="close float-right" class="d-flex flex-column"  @click="hide(notice)">
+      Nascondi      
+    </button>
+</div>
+</div>
+<div class="card-body" v-else>
+        Nessun nuovo avviso oggi
+</div>
+
+<br>
+<h3>Avvisi nascosti:</h3>
+<div v-if="updates[1].length" >
+    <div class="card mb-2" v-for="notice, index in updates[1]">
+        <div class="card-body" >
+            [[notice.titolo]]
+        </div>
+        <button type="button" class="close float-right" class="d-flex flex-column"  @click="retrive(notice)">
+          Ripristina      
+        </button>
+    </div>
+    </div>
+    <div class="card-body" v-else>
+            Nessun avviso nascosto oggi 
+    </div>
+<br>
+<br>
+
+<h3>Lezioni:</h3>
+<div v-if="updates[2].length" >
+<div class="card mb-2" v-for="lesson, index in updates[2]">
+    <div class="card-body" >
+        [[lesson.nome]]
+    </div>
+    <button type="button" class="close float-right" class="d-flex flex-column"  @click="hide(lesson)">
+      Nascondi      
+    </button>
+</div>
+</div>
+<div class="card-body" v-else>
+        Nessuna lezione oggi 
+</div>
+
+<br>
+<h3>Lezioni nascoste:</h3>
+<div v-if="updates[3].length" >
+    <div class="card mb-2" v-for="lesson, index in updates[3]">
+        <div class="card-body" >
+            [[lesson.nome]]
+        </div>
+        <button type="button" class="close float-right" class="d-flex flex-column"  @click="retrive(lesson)">
+          Ripristina      
+        </button>
+    </div>
+    </div>
+    <div class="card-body" v-else>
+            Nessuna lezione nascosta oggi 
+    </div>
+<br>
+
+<br>
+
+<h3>Ricevimenti:</h3>
+<div v-if="updates[4].length" >
+<div class="card mb-2" v-for="office_hour, index in updates[4]">
+    <div class="card-body" >
+        [[office_hour.nome]]
+    </div>
+    <button type="button" class="close float-right" class="d-flex flex-column"  @click="hide(office_hour)">
+      Nascondi      
+    </button>
+</div>
+</div>
+<div class="card-body" v-else>
+        Nessun ricevimento oggi 
+</div>
+
+<br>
+<h3>Ricevimenti nascosti:</h3>
+<div v-if="updates[5].length" >
+    <div class="card mb-2" v-for="office_hour, index in updates[5]">
+        <div class="card-body" >
+            [[office_hour.nome]]
+        </div>
+        <button type="button" class="close float-right" class="d-flex flex-column"  @click="retrive(office_hour)">
+          Ripristina      
+        </button>
+    </div>
+    </div>
+    <div class="card-body" v-else>
+            Nessun ricevimento nascosto oggi 
+    </div>
+<br>
+
+</div>
+{% endblock %}
+
+    

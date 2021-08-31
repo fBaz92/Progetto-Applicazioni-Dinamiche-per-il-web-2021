@@ -1,0 +1,37 @@
+{% load static %}
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Univr Portal</title>
+  <meta name="description" content="A simple HTML5 Template for new projects.">
+  
+
+  <meta http-equiv= "X-UA-Compatible" content="ie=edge" >
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+
+  <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+
+<body>
+  <!-- your content here... -->
+  <div class="container">
+      <div class="row">
+          <div class="col-6 mx-auto mt-5">
+            {% block content %}
+
+            {% endblock %}
+          </div>
+      </div>
+
+    
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.min.js" integrity="sha512-XdUZ5nrNkVySQBnnM5vzDqHai823Spoq1W3pJoQwomQja+o4Nw0Ew1ppxo5bhF2vMug6sfibhKWcNJsG8Vj9tg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script src="{% static 'main.js' %}"></script>
+</body>
+</html>

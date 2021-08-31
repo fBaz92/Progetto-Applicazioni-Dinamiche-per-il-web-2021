@@ -1,0 +1,94 @@
+var app = new Vue({
+    el: '#app',
+    delimiters: ["[[", "]]"],
+    data : {
+        csrf: null,
+        user_name: [],
+        task: {title: ''},
+        updates: [],
+        notices: [],
+        lessons: [],
+        office_hours: [],
+        date: {day:''},
+        
+            
+            
+    },
+    methods: {
+        
+        async getCsrfToken(){
+            if (this.csrf === null){
+                var response = await fetch('http://localhost:8000/csrf ');
+                var data = await response.json();
+                this.csrf = data.csrf_token;
+            };
+            return this.csrf;
+        },  
+        
+        async getUser(){
+            var  usern = await fetch('http://localhost:8000/getuser',
+                {
+                    method: 'get',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                }
+            );
+            this.user_name = await usern.json();
+        }, 
+        
+        async getUpdates(){
+            await this.getUser();
+            var response = await fetch('http://localhost:8000/user/'+ this. user_name.username,
+                {
+                    method: 'post',
+                    headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': await this.getCsrfToken()
+                    },
+                    body: JSON.stringify(this.date)
+                }
+            );
+            this.updates = await response.json()
+             
+            
+            
+        },
+        async hide(element){
+            
+            await fetch('http://localhost:8000/hide',
+            { method: 'post',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'X-Requested-With': 'XMLHttpRequest',
+                  'X-CSRFToken': await this.getCsrfToken()
+              },
+              body: JSON.stringify(element)
+            });
+            await this.getUpdates()
+                        
+        },
+
+        async retrive(element){
+            
+            await fetch('http://localhost:8000/retrive',
+            { method: 'post',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'X-Requested-With': 'XMLHttpRequest',
+                  'X-CSRFToken': await this.getCsrfToken()
+              },
+              body: JSON.stringify(element)
+            });
+            await this.getUpdates()
+                        
+        },
+        
+
+    },
+    async created(){
+        await this.getUpdates();
+
+    }
+})

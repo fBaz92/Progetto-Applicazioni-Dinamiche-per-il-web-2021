@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<Title>Register</Title>
+
+<h1>Inserisci i dati richiesti:</h1>
+  <br>
+    <form method="POST" action="register">
+        {% csrf_token %}
+        <p>Nome Utente</p>
+        <input type="text" name="username" placeholder="user1"/>
+        <p>Email</p>
+        <input type="email" name="email" placeholder="someone@domain.com"/>
+        <p>Password</p>
+        <input type="password" name="password"/>
+        <p>Repeat Password</p>
+        <input type="password" name="password2"/>
+        <input type="submit"/>
+    </form>
+    
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<Title>Università di Verona</Title>
+  <h3>Aggiornamenti in data: {{date}} </h3>
+ 
+  <br>
+  {% for notice in Notices %}
+  <h2>{{notice}} </h2>
+  <form method="POST" action="Login">
+    {% csrf_token %}
+    <input type="submit" value="nascondi"/>
+  </form>
+
+  {% endfor %}
+  <br>
+  <br>
+  {% for lesson in Lessons %}
+  <h2>{{lesson}} </h2>
+  {% endfor %}
+  <br>
+  <br>
+  {% for officehour in Officehours %}
+  <h2>{{officehour}} </h2>
+  {% endfor %}
+  {% endblock %}
+  
