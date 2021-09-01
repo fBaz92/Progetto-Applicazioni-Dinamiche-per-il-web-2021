@@ -4,7 +4,7 @@
 <div id="app">
 <h1>Ciao <span v-model="user_name">{{username}}</span></h1>
 <br>
-<h2>Seleziona la data:</h2>
+<h2>Seleziona la data: [[date.day]]</h2>
   <br>
     <form @submit.prevent="getUpdates">
         <input type="date" v-model="date.day"/>

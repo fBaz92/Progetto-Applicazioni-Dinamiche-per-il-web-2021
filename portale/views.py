@@ -12,8 +12,11 @@ from datetime import date
 from django.middleware.csrf import get_token
 # Create your views here.
 
-def DateUpdates (date):
-    res = urllib.request.urlopen('https://www.di.univr.it/?ent=evento&idDip=30&' + 'a=' + date[0:4] + 'g=' + date[:8] + 
+def GetUpdates (request):
+    date = json.loads(request.body)['day']
+    if len(date) == 0:
+        date = datetime.date.today().strftime("%Y-%m-%d")
+    res = urllib.request.urlopen('https://www.di.univr.it/?ent=evento&idDip=30&' + 'a=' + date[0:4] + '&g=' + date[8:] + 
     '&m=' + date[5:7] + '&out=json').read()
     res = res.decode("utf-8")
     res = str(res).replace('"note": new Element(\'span\').set(\'html\', ','"note": ')
@@ -79,31 +82,29 @@ def DateUpdates (date):
        o = [str(office_hour['nome']), str(office_hour['intervallo'][0]['oraInizio' ]), str(office_hour['intervallo'][0]['oraFine']), 
        new_tipo_luogo, new_nome_luogo ] 
        Officehours.append(o)
-    
+    return JsonResponse({'result': 'ok'})  
+
 def index (request): 
     return render(request,'index.html')
 
 
-def Login (request): 
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username = username, password = password)
-        if user is not None:
-             login(request, user)
-             return redirect ('user/' + username)
-        else:
-             messages.info(request,'username or password not valid')
-             return redirect ('login_page')
-             
-    
+def Login (request):
+  if request.method == 'POST':
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(request, username = username, password = password)
+    if user is not None:
+      login(request, user)
+      return redirect ('user/' + username)
+    else:
+      messages.info(request,'username or password not valid')
+      return redirect ('login')       
+  else:
+    return render(request,'login.html')
 
-def login_page (request): 
-        #return render(request,'login.html', {{Student.objects.get(Username = 'user1').notice.titolo}})
-         return render(request,'login.html')
-
-def loggout(request):
+def Logout(request):
     logout(request)
-    return redirect('login_page')
+    return redirect('login')
         
     
 
@@ -123,13 +124,18 @@ def register(request):
              messages.info(request,'username already used')
              return redirect ('register')
          else:
-             user = Student.objects.create_user(username = username, email = email, password = password)
-             user.notice.add(Notice.objects.get(titolo = 'Informazione e casualità. L’interazione tra caso e calcolo nella scienza moderna. Prof. Vincenzo Manca'))
-             return redirect('login_page')
+             Student.objects.create_user(username = username, email = email, password = password)
+             return redirect('Login')
      else:
          return render(request,'register.html')
 
 def user(request, username):
+    return render(request, 'user.html', {'username': username})
+
+def LoadUpdates(request):
+    username = None
+    if request.user.is_authenticated:
+        username = request.user.username
     student = Student.objects.get(username = username)
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
       today = date.today()
@@ -138,8 +144,6 @@ def user(request, username):
         today = datetime.datetime.strptime(date_request, '%Y-%m-%d').date()
       else:
         date_request = today.strftime("%Y-%m-%d")
-      
-      DateUpdates(date_request)     
       
       notice_on = list(Notice.objects.filter(data_notice = today ).exclude(student__id = student.id).values())
       notice_off = list(Notice.objects.filter(student__id = student.id, data_notice = today ).values())
@@ -154,7 +158,7 @@ def user(request, username):
 
       return JsonResponse([notice_on, notice_off, lesson_on, lesson_off, office_hour_on, office_hour_off], safe=False, status = 200)
        
-    return render(request, 'user.html', {'username': student.username})
+    
 
 def getuser(request):
     username = None
