@@ -16,7 +16,7 @@ def GetUpdates (request):
     date = json.loads(request.body)['day']
     if len(date) == 0:
         date = datetime.date.today().strftime("%Y-%m-%d")
-    res = urllib.request.urlopen('https://www.di.univr.it/?ent=evento&idDip=30&' + 'a=' + date[0:4] + 'g=' + date[:8] + 
+    res = urllib.request.urlopen('https://www.di.univr.it/?ent=evento&idDip=30&' + 'a=' + date[0:4] + '&g=' + date[8:] + 
     '&m=' + date[5:7] + '&out=json').read()
     res = res.decode("utf-8")
     res = str(res).replace('"note": new Element(\'span\').set(\'html\', ','"note": ')
@@ -130,30 +130,6 @@ def register(request):
          return render(request,'register.html')
 
 def user(request, username):
-    """student = Student.objects.get(username = username)
-    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-      today = date.today()
-      date_request = json.loads(request.body)['day']
-      if len(date_request) > 0:
-        today = datetime.datetime.strptime(date_request, '%Y-%m-%d').date()
-      else:
-        date_request = today.strftime("%Y-%m-%d")
-      
-      DateUpdates(date_request)     
-      
-      notice_on = list(Notice.objects.filter(data_notice = today ).exclude(student__id = student.id).values())
-      notice_off = list(Notice.objects.filter(student__id = student.id, data_notice = today ).values())
-
-      
-      lesson_on = list(Lesson.objects.filter(data_lesson = today).exclude(student__id = student.id).values()) 
-      lesson_off = list(Lesson.objects.filter(student__id = student.id, data_lesson = today).values()) 
-
-     
-      office_hour_on = list(OfficeHour.objects.filter(data_officehour = today).exclude(student__id = student.id).values())
-      office_hour_off = list(OfficeHour.objects.filter(student__id = student.id, data_officehour = today).values())  
-
-      return JsonResponse([notice_on, notice_off, lesson_on, lesson_off, office_hour_on, office_hour_off], safe=False, status = 200)"""
-       
     return render(request, 'user.html', {'username': username})
 
 def LoadUpdates(request):
