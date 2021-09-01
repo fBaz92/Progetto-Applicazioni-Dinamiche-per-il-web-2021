@@ -9,15 +9,12 @@ var app = new Vue({
         notices: [],
         lessons: [],
         office_hours: [],
-        date: {day:''},
-        
-            
-            
+        date: {day:''}, 
     },
     methods: {
         
         async getCsrfToken(){
-            if (this.csrf === null){
+            if (this.csrf == null){
                 var response = await fetch('http://localhost:8000/csrf ');
                 var data = await response.json();
                 this.csrf = data.csrf_token;
