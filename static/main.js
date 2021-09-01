@@ -38,8 +38,24 @@ var app = new Vue({
         }, 
         
         async getUpdates(){
+            await fetch('http://localhost:8000/getupdates',
+                {
+                    method: 'post',
+                    headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': await this.getCsrfToken()
+                    },
+                    body: JSON.stringify(this.date)
+                }
+            );
+            var response = await this.loadUpdates();
+            this.updates = await response.json()
+        },
+
+        async loadUpdates(){
             await this.getUser();
-            var response = await fetch('http://localhost:8000/user/'+ this. user_name.username,
+            var response = await fetch('http://localhost:8000/loadupdates',
                 {
                     method: 'post',
                     headers: {
@@ -51,7 +67,6 @@ var app = new Vue({
                 }
             );
             this.updates = await response.json()
-             
             
             
         },
@@ -66,7 +81,7 @@ var app = new Vue({
               },
               body: JSON.stringify(element)
             });
-            await this.getUpdates()
+            await this.loadUpdates()
                         
         },
 
@@ -81,7 +96,7 @@ var app = new Vue({
               },
               body: JSON.stringify(element)
             });
-            await this.getUpdates()
+            await this.loadUpdates()
                         
         },
         
@@ -89,6 +104,6 @@ var app = new Vue({
     },
     async created(){
         await this.getUpdates();
-
+        
     }
 })
