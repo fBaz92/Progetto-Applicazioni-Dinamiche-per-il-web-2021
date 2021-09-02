@@ -16,7 +16,16 @@
         <p>Repeat Password</p>
         <input type="password" name="password2"/>
         <input type="submit"/>
+        {%for message in messages%}
+         <h3>{{message}} </h3>
+        {% endfor %}
     </form>
+    
+    
+    
+    <style>
+    h3 {color: red}
+    </style>
     
 
 {% endblock %}

@@ -16,6 +16,13 @@
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
   <div class="mb-3">
+    {%for message in messages%}
+    <h3>{{message}} </h3>
+    {% endfor %}
+    
+    <style>
+    h3 {color: red}
+    </style>
   <div class="text-center">
     <a class="small" href="register">Non ancora registrato?</a>
   </div>

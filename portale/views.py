@@ -97,14 +97,14 @@ def Login (request):
       login(request, user)
       return redirect ('user/' + username)
     else:
-      messages.info(request,'username or password not valid')
-      return redirect ('login')       
+      messages.info(request,'Username or Password not valid')
+      return redirect ('Login')       
   else:
     return render(request,'login.html')
 
 def Logout(request):
     logout(request)
-    return redirect('login')
+    return redirect('Login')
         
     
 
@@ -114,14 +114,14 @@ def register(request):
          email = request.POST['email']
          password = request.POST['password']
          password2 = request.POST['password2']
-         if password != password2:
-             messages.info(request,'password does not match')
+         if Student.objects.filter(username = username).exists():
+             messages.info(request,'username already used') 
              return redirect ('register')
          elif Student.objects.filter(email = email).exists():
              messages.info(request,'email already used')
              return redirect ('register')
-         elif Student.objects.filter(username = username).exists():
-             messages.info(request,'username already used')
+         elif password != password2:
+             messages.info(request,'password does not match')
              return redirect ('register')
          else:
              Student.objects.create_user(username = username, email = email, password = password)
