@@ -3,8 +3,8 @@
 {% block content %}
 
 <Title>Login</Title>
-<form method="POST" action="login">
-  {% csrf_token %}
+<form method="POST" action="login">{% csrf_token %}
+  
     <div class="container container-login">
         <div class="mb-3 login-username">
           <label for="LogInNomeUtente" class="form-label">Nome Utente</label>
