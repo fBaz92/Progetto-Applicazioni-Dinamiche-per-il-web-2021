@@ -3,29 +3,37 @@
 {% block content %}
 <Title>Register</Title>
 
-<h1>Inserisci i dati richiesti:</h1>
-  <br>
+  
+  <div class="container container-register">
     <form method="POST" action="register">
-        {% csrf_token %}
-        <p>Nome Utente</p>
-        <input type="text" name="username" placeholder="user1"/>
-        <p>Email</p>
-        <input type="email" name="email" placeholder="someone@domain.com"/>
-        <p>Password</p>
-        <input type="password" name="password"/>
-        <p>Repeat Password</p>
-        <input type="password" name="password2"/>
-        <input type="submit"/>
-        {%for message in messages%}
-         <h3>{{message}} </h3>
-        {% endfor %}
+      {% csrf_token %}
+            <div class="mb-3 register-username">
+              <label for="RegisterNomeUtente" class="form-label">Nome Utente</label>
+              <input type="text" name="username" class="form-control" id="RegisterNomeUtente" aria-describedby="UserNameHelp">
+              <div id="UserNameHelp" class="form-text">Inserisci il tuo nome utente</div>
+            </div>
+            <div class="mb-3 ">
+              <label for="RegisterEMail" class="form-label">e-mail</label>
+              <input type="email" name="email" class="form-control" id="RegisterEmail" aria-describedby="EmailHelp">
+              <div id="EmailHelp" class="form-text">Inserisci la tua e-mail</div>
+            </div>
+            <div class="mb-3 ">
+              <label for="RegisterPassword" class="form-label">Nome Utente</label>
+              <input type="text" name="password" class="form-control" id="RegisterPassword" aria-describedby="PasswordHelp">
+              <div id="PasswordHelp" class="form-text">Inserisci la password</div>
+            </div>
+            <div class="mb-3 ">
+              <label for="RegisterPassword" class="form-label">Nome Utente</label>
+              <input type="text" name="password2" class="form-control" id="RegisterPassword" aria-describedby="PasswordHelp">
+              <div id="PasswordHelp" class="form-text">Inserisci nuovamente la password</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Accedi</button>
+            <div class="mb-3 login-register">
+              <div class="text-center">
+                <a class="small" href="/login">Già registrato? Accedi.</a>
+              </div>
+            </div>
     </form>
-    
-    
-    
-    <style>
-    h3 {color: red}
-    </style>
-    
+  </div>
 
 {% endblock %}

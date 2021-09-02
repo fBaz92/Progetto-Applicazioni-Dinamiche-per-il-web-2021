@@ -5,29 +5,23 @@
 <Title>Login</Title>
 <form method="POST" action="login">
   {% csrf_token %}
-  <div class="mb-3">
-    <label for="LogInNomeUtente" class="form-label">Nome Utente</label>
-    <input type="text" name="username" class="form-control" id="LogInNomeUtente" aria-describedby="UserNameHelp">
-    <div id="UserNameHelp" class="form-text">Inserisci il tuo nome utente</div>
-  </div>
-  <div class="mb-3">
-    <label for="UserNameHelp" class="form-label">Password</label>
-    <input type="password" name="password" class="form-control" id="UserNameHelp">
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-  <div class="mb-3">
-    {%for message in messages%}
-    <h3>{{message}} </h3>
-    {% endfor %}
-    
-    <style>
-    h3 {color: red}
-    </style>
-  <div class="text-center">
-    <a class="small" href="register">Non ancora registrato?</a>
-  </div>
-  </div>
-
+    <div class="container container-login">
+        <div class="mb-3 login-username">
+          <label for="LogInNomeUtente" class="form-label">Nome Utente</label>
+          <input type="text" name="username" class="form-control" id="LogInNomeUtente" aria-describedby="UserNameHelp">
+          <div id="UserNameHelp" class="form-text">Inserisci il tuo nome utente</div>
+        </div>
+        <div class="mb-3 ">
+          <label for="UserNameHelp" class="form-label">Password</label>
+          <input type="password" name="password" class="form-control" id="UserNameHelp">
+        </div>
+        <button type="submit" class="btn btn-primary">Accedi</button>
+        <div class="mb-3 login-register">
+          <div class="text-center">
+            <a class="small" href="/register">Non ancora registrato?</a>
+          </div>
+        </div>
+    </div>
 </form>
 
 
