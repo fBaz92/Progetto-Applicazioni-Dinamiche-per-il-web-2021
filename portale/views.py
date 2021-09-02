@@ -85,7 +85,7 @@ def GetUpdates (request):
     return JsonResponse({'result': 'ok'})  
 
 def index (request): 
-    return render(request,'index.html')
+    return redirect('Login')
 
 
 def Login (request):
@@ -98,7 +98,7 @@ def Login (request):
       return redirect ('user/' + username)
     else:
       messages.info(request,'Username or Password not valid')
-      return redirect ('Login')       
+      return redirect('Login')       
   else:
     return render(request,'login.html')
 

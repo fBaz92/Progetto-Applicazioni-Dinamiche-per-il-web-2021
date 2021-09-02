@@ -1,3 +1,5 @@
+var baseurl = 'http://127.0.0.1:8000/';
+
 var app = new Vue({
     el: '#app',
     delimiters: ["[[", "]]"],
@@ -15,7 +17,7 @@ var app = new Vue({
         
         async getCsrfToken(){
             if (this.csrf == null){
-                var response = await fetch('http://localhost:8000/csrf ');
+                var response = await fetch(baseurl + 'csrf');
                 var data = await response.json();
                 this.csrf = data.csrf_token;
             };
@@ -23,7 +25,7 @@ var app = new Vue({
         },  
         
         async getUser(){
-            var  usern = await fetch('http://localhost:8000/getuser',
+            var  usern = await fetch(baseurl + 'getuser',
                 {
                     method: 'get',
                     headers: {
@@ -35,7 +37,7 @@ var app = new Vue({
         }, 
         
         async getUpdates(){
-            await fetch('http://localhost:8000/getupdates',
+            await fetch(baseurl + 'getupdates',
                 {
                     method: 'post',
                     headers: {
@@ -52,7 +54,7 @@ var app = new Vue({
 
         async loadUpdates(){
             await this.getUser();
-            var response = await fetch('http://localhost:8000/loadupdates',
+            var response = await fetch(baseurl + 'loadupdates',
                 {
                     method: 'post',
                     headers: {
@@ -69,7 +71,7 @@ var app = new Vue({
         },
         async hide(element){
             
-            await fetch('http://localhost:8000/hide',
+            await fetch(baseurl + 'hide',
             { method: 'post',
               headers: {
                   'Content-Type': 'application/json',
@@ -84,7 +86,7 @@ var app = new Vue({
 
         async retrive(element){
             
-            await fetch('http://localhost:8000/retrive',
+            await fetch(baseurl + 'retrive',
             { method: 'post',
               headers: {
                   'Content-Type': 'application/json',
