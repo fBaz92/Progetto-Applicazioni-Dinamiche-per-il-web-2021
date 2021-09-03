@@ -2,117 +2,159 @@
 
 {% block content %}
 <div id="app">
-<h1>Ciao <span v-model="user_name">{{username}}</span></h1>
-<br>
-<h2>Seleziona la data: [[date.day]]</h2>
-  <br>
-    <form @submit.prevent="getUpdates">
-        <input type="date" v-model="date.day"/>
-        <input type="submit"/>
-    </form>
+   
+    <div class="container text-center justify-content-center container-user">
+        <h1 class="text-center">Ciao <span v-model="user_name">{{username}}</span></h1>
+        <br>
+        <h2 >
+            Seleziona la data: [[date.day]] 
+        </h2>
+        <br>
+        <form @submit.prevent="getUpdates">
+            <input type="date" v-model="date.day"/>
+            <button class="btn btn-primary" type="submit">Seleziona</button>
+         </form>
+    </div>
     
-<br>
-<h2>Aggiornamenti odierni</h2>
-<br>
-<h3>Avvisi:</h3>
-<div v-if="updates[0].length" >
-<div class="card mb-2" v-for="notice, index in updates[0]">
-    <div class="card-body" >
-        [[notice.titolo]]
-    </div>
-    <button type="button" class="close float-right" class="d-flex flex-column"  @click="hide(notice)">
-      Nascondi      
-    </button>
-</div>
-</div>
-<div class="card-body" v-else>
-        Nessun nuovo avviso oggi
-</div>
+    <br>
+    <h2>Aggiornamenti odierni</h2>
+    <br>
+    <!--Avvisi-->
+    <h3>Avvisi:</h3>
 
-<br>
-<h3>Avvisi nascosti:</h3>
-<div v-if="updates[1].length" >
-    <div class="card mb-2" v-for="notice, index in updates[1]">
-        <div class="card-body" >
-            [[notice.titolo]]
+    <div class="container" id="app">
+        <div class="row" v-if="updates[0].length">
+            <div v-for="notice, index in updates[0]" class="col-md-3 col-6 my-1">
+            <!--Qua metto le carte-->      
+                <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title"></h5>
+                      <p class="card-text">[[notice.titolo]]</p>
+                      <button class="btn btn-primary" @click="hide(notice)">Nascondi</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <button type="button" class="close float-right" class="d-flex flex-column"  @click="retrive(notice)">
-          Ripristina      
-        </button>
+        <div class="row" v-else>
+            Nessun nuovo avviso oggi 
+        </div>
     </div>
-    </div>
-    <div class="card-body" v-else>
+
+    <br>
+
+
+    <h3>Avvisi nascosti:</h3>
+
+
+    <div class="container" id="app">
+        <div class="row" v-if="updates[1].length">
+            <div v-for="notice, index in updates[1]" class="col-md-3 col-6 my-1">
+            <!--Qua metto le carte-->      
+                <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title"></h5>
+                      <p class="card-text">[[notice.titolo]]</p>
+                      <button class="btn btn-primary" @click="retrive(notice)">Ripristina</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" v-else>
             Nessun avviso nascosto oggi 
+        </div>
     </div>
-<br>
-<br>
+
+
+
+    <br>
+    <br>
 
 <h3>Lezioni:</h3>
-<div v-if="updates[2].length" >
-<div class="card mb-2" v-for="lesson, index in updates[2]">
-    <div class="card-body" >
-        [[lesson.nome]]
+
+    <div class="container" id="app">
+        <div class="row" v-if="updates[2].length">
+            <div v-for="lesson, index in updates[2]" class="col-md-3 col-6 my-1">
+            <!--Qua metto le carte-->      
+                <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title"></h5>
+                      <p class="card-text">[[lesson.nome]]</p>
+                      <button class="btn btn-primary" @click="hide(lesson)">Nascondi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" v-else>
+            Nessuna lezione oggi 
+        </div>
     </div>
-    <button type="button" class="close float-right" class="d-flex flex-column"  @click="hide(lesson)">
-      Nascondi      
-    </button>
-</div>
-</div>
-<div class="card-body" v-else>
-        Nessuna lezione oggi 
-</div>
 
 <br>
 <h3>Lezioni nascoste:</h3>
-<div v-if="updates[3].length" >
-    <div class="card mb-2" v-for="lesson, index in updates[3]">
-        <div class="card-body" >
-            [[lesson.nome]]
-        </div>
-        <button type="button" class="close float-right" class="d-flex flex-column"  @click="retrive(lesson)">
-          Ripristina      
-        </button>
-    </div>
-    </div>
-    <div class="card-body" v-else>
-            Nessuna lezione nascosta oggi 
-    </div>
-<br>
 
+    <div class="container" id="app">
+        <div class="row" v-if="updates[3].length">
+            <div v-for="lesson, index in updates[3]" class="col-md-3 col-6 my-1">
+            <!--Qua metto le carte-->      
+                <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title"></h5>
+                      <p class="card-text">[[lesson.nome]]</p>
+                      <button class="btn btn-primary" @click="retrive(lesson)">Ripristina</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" v-else>
+            Nessuna lezione oggi 
+        </div>
+    </div>
+
+<br>
 <br>
 
 <h3>Ricevimenti:</h3>
-<div v-if="updates[4].length" >
-<div class="card mb-2" v-for="office_hour, index in updates[4]">
-    <div class="card-body" >
-        [[office_hour.nome]]
+
+    <div class="container" id="app">
+        <div class="row" v-if="updates[4].length">
+            <div v-for="office_hour, index in updates[4]" class="col-md-3 col-6 my-1">
+            <!--Qua metto le carte-->      
+                <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title"></h5>
+                      <p class="card-text">[[office_hour.nome]]</p>
+                      <button class="btn btn-primary" @click="hide(office_hour)">Nascondi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" v-else>
+            Nessun ricevimento oggi  
+        </div>
     </div>
-    <button type="button" class="close float-right" class="d-flex flex-column"  @click="hide(office_hour)">
-      Nascondi      
-    </button>
-</div>
-</div>
-<div class="card-body" v-else>
-        Nessun ricevimento oggi 
-</div>
 
 <br>
 <h3>Ricevimenti nascosti:</h3>
-<div v-if="updates[5].length" >
-    <div class="card mb-2" v-for="office_hour, index in updates[5]">
-        <div class="card-body" >
-            [[office_hour.nome]]
-        </div>
-        <button type="button" class="close float-right" class="d-flex flex-column"  @click="retrive(office_hour)">
-          Ripristina      
-        </button>
-    </div>
-    </div>
-    <div class="card-body" v-else>
-            Nessun ricevimento nascosto oggi 
-    </div>
-<br>
 
+    <div class="container" id="app">
+        <div class="row" v-if="updates[5].length">
+            <div v-for="office_hour, index in updates[5]" class="col-md-3 col-6 my-1">
+            <!--Qua metto le carte-->      
+                <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title"></h5>
+                      <p class="card-text">[[office_hour.nome]]</p>
+                      <button class="btn btn-primary" @click="retrive(office_hour)">Ripristina</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" v-else>
+            Nessun ricevimento nascosto oggi 
+        </div>
+    </div>
+
+<br>
 </div>
 {% endblock %}
 
