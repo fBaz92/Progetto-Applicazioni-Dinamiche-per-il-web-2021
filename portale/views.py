@@ -12,7 +12,7 @@ from datetime import date
 from django.middleware.csrf import get_token
 # Create your views here.
 
-def GetUpdates (request):
+def GetUpdates(request):
     date = json.loads(request.body)['day']
     if len(date) == 0:
         date = datetime.date.today().strftime("%Y-%m-%d")
@@ -84,11 +84,11 @@ def GetUpdates (request):
        Officehours.append(o)
     return JsonResponse({'result': 'ok'})  
 
-def index (request): 
-    return render(request,'index.html')
+def index(request): 
+    return redirect('Login')
 
 
-def Login (request):
+def Login(request):
   if request.method == 'POST':
     username = request.POST['username']
     password = request.POST['password']
@@ -98,7 +98,7 @@ def Login (request):
       return redirect ('user/' + username)
     else:
       messages.info(request,'Username or Password not valid')
-      return redirect ('Login')       
+      return redirect('Login')       
   else:
     return render(request,'login.html')
 
