@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">{{ notice.titolo }}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">Data pubblicazione: {{ notice.data_pubblicazione }}</h6>
-        <p class="card-text">{{ notice.testo }}</p>
-        <p class="card-text">Da: {{ notice.mittenti }}</p>
-      </div>
+    <div class="container detail-container">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ notice.titolo }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Data pubblicazione: {{ notice.data_pubblicazione }}</h6>
+                <p class="card-text">{{ notice.testo }}</p>
+                <p class="card-text">Da: {{ notice.mittenti }}</p>
+            </div>
+        </div>
     </div>
 {% endblock %}

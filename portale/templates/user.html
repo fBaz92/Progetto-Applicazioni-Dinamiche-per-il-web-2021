@@ -30,8 +30,8 @@
                     <div class="card-body">
                       <h5 class="card-title"></h5>
                       <p class="card-text">[[notice.titolo]]</p>
+                      <p><a v-bind:href="'notices/'+ notice.id">Vedi dettaglio</a></p>
                       <button class="btn btn-primary" @click="hide(notice)">Nascondi</button>
-                      <button class="btn btn-primary" @click="get_detail_notice(notice)">Vedi dettaglio</button>
                     </div>
                 </div>
             </div>

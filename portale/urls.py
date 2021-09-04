@@ -13,7 +13,8 @@ urlpatterns = [
     path('retrive', views.retrive, name = 'retrive'), 
     path('getupdates', views.GetUpdates, name = 'getupdates'), 
     path('loadupdates', views.LoadUpdates, name = 'loadupdates'),
-    path('notices/<int:primary_key>', views.detail_notice, name='detail_notice'),
-
+    path('user/notices/<int:primary_key>', views.detail_notice, name='detail_notice'),
+    #path('user/lesson/<int:primary_key>', views.detail_lesson, name='detail_lesson'),
+    #path('user/office_hour/<int:primary_key>', views.detail_office_hour, name='detail_office_our'),
 ]
 
