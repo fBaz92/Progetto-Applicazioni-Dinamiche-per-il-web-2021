@@ -172,7 +172,7 @@ def generate_csrf(request):
 def hide(request):
   username = None
   if request.user.is_authenticated:
-      username = request.user.username
+    username = request.user.username
   element = json.loads(request.body)
   if 'titolo' in element.keys():
     Student.objects.get(username = username).notice.add(Notice.objects.get(data_notice = element['data_notice'], titolo = element['titolo']))
@@ -182,6 +182,7 @@ def hide(request):
     Student.objects.get(username = username).lesson.add(Lesson.objects.get(data_lesson = element['data_lesson'], nome = element['nome'], ora_inizio = element['ora_inizio'])) 
   
   return JsonResponse({'result': 'ok'})
+
 
 def retrive(request):
   username = None
@@ -197,4 +198,13 @@ def retrive(request):
   return JsonResponse({'result': 'ok'})
 
   
+def detail_notice(request, primary_key):
+
+    try:
+        notice = Notice.objects.get(pk=primary_key)
+        print(primary_key)
+        print(notice.titolo)
+    except Notice.DoesNotExist:
+        raise Http404('Notice does not exist')
     
+    return render(request, 'notice_detail.html', context={'notice': notice})

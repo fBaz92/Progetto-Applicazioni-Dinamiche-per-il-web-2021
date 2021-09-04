@@ -98,6 +98,20 @@ var app = new Vue({
             await this.loadUpdates()
                         
         },
+
+        async get_detail_notice(notice){
+            
+            await fetch(baseurl + 'notices/' + notice.id,
+            { method: 'post',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'X-Requested-With': 'XMLHttpRequest',
+                  'X-CSRFToken': await this.getCsrfToken()
+              },
+              body: JSON.stringify(notice)
+            });
+            await this.loadUpdates()                        
+        },
         
 
     },
