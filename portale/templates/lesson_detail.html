@@ -4,10 +4,9 @@
     <div class="container detail-container">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">{{ notice.titolo }}</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Data pubblicazione: {{ notice.data_pubblicazione }}</h6>
-                <p class="card-text">{{ notice.testo }}</p>
-                <p class="card-text">Da: {{ notice.mittenti }}</p>
+                <h5 class="card-title">{{ lesson.nome }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Il giorno {{ lesson.ora_inizio|date:"l d F " }} dalle ore {{ lesson.ora_inizio|date:"H:i" }} alle ore {{ lesson.ora_fine|date:"H:i" }}</h6>
+                <p class="card-text">{{ lesson.tipo_luogo }} {{ lesson.nome_luogo }} edificio {{ lesson.id_edificio }} </p>
             </div>
         </div>
     </div>
