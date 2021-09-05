@@ -80,6 +80,7 @@
                     <div class="card-body">
                       <h5 class="card-title"></h5>
                       <p class="card-text">[[lesson.nome]]</p>
+                      <p><a v-bind:href="'lesson/'+ lesson.id">Vedi dettaglio</a></p>
                       <button class="btn btn-primary" @click="hide(lesson)">Nascondi</button>
                     </div>
                 </div>
@@ -124,6 +125,7 @@
                     <div class="card-body">
                       <h5 class="card-title"></h5>
                       <p class="card-text">[[office_hour.nome]]</p>
+                      <p><a v-bind:href="'office_hour/'+ office_hour.id">Vedi dettaglio</a></p>
                       <button class="btn btn-primary" @click="hide(office_hour)">Nascondi</button>
                     </div>
                 </div>

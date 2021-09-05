@@ -10,9 +10,11 @@ from portale.models import Notice, Lesson, OfficeHour, Student
 import datetime
 from datetime import date
 from django.middleware.csrf import get_token
+import html
 # Create your views here.
 
 def GetUpdates(request):
+
     date = json.loads(request.body)['day']
     if len(date) == 0:
         date = datetime.date.today().strftime("%Y-%m-%d")
@@ -27,61 +29,107 @@ def GetUpdates(request):
     Lessons = []
     Officehours = []
     date = datetime.datetime.strptime(date, '%Y-%m-%d').date()
+    
+    #verifico che non abbia dei nuovi avvisi
     for notice in data['notices']:
-       if not Notice.objects.filter(data_notice= date, data_pubblicazione = datetime.datetime.strptime(
-       str(notice['dataPubblicazione']), '%b %d, %Y %H:%M:%S'), titolo = str(notice['titolo'])).exists():
-         new_notice = Notice.objects.create(data_notice= date, data_pubblicazione = datetime.datetime.strptime(
-         str(notice['dataPubblicazione']), '%b %d, %Y %H:%M:%S'), 
-         titolo = str(notice['titolo']), testo = str(notice['testo']), mittenti = str(notice['mittenti']))
-         new_notice.save() 
-       n = [str(notice['titolo']), str(notice['testo']), str(notice['mittenti']) ]
-       Notices.append(n)
+      
+      #verifica che la notice non esista nel database
+      contition = Notice.objects.filter(
+          data_notice=date, 
+          data_pubblicazione=datetime.datetime.strptime(str(notice['dataPubblicazione']), '%b %d, %Y %H:%M:%S'), 
+          titolo=str(notice['titolo'])
+      ).exists()
 
+      #se non esiste
+      if not contition:
+        #creo una nuova notice
+        new_notice = Notice.objects.create(
+            data_notice=date, 
+            data_pubblicazione=datetime.datetime.strptime(str(notice['dataPubblicazione']), '%b %d, %Y %H:%M:%S'),
+            titolo=str(notice['titolo']), 
+            testo=html.unescape(str(notice['testo'])), 
+            mittenti=str(notice['mittenti'])
+        )
+        #salvo una nuova notice
+        new_notice.save() 
+        n = [str(notice['titolo']), str(notice['testo']), str(notice['mittenti']) ]
+        #
+        Notices.append(n)
+
+    #verifico che non abbia delle nuove lezioni
     for lesson in data['lessons']['value']:
-       if not Lesson.objects.filter(data_lesson= date, nome = str(lesson['nome']), 
-       ora_inizio = datetime.datetime.strptime(str(lesson['intervallo'][0]['oraInizio']), '%b %d, %Y %H:%M:%S')).exists(): 
-         new_lesson = Lesson.objects.create(data_lesson= date, nome = str(lesson['nome']), 
-         ora_inizio = datetime.datetime.strptime(str(lesson['intervallo'][0]['oraInizio']), '%b %d, %Y %H:%M:%S'), 
-         ora_fine = datetime.datetime.strptime(str(lesson['intervallo'][0]['oraFine']), '%b %d, %Y %H:%M:%S'), 
-         id_edificio = str(lesson['intervallo'][0]['luogo'][0]['idEdificio']), 
-         tipo_luogo = str(lesson['intervallo'][0]['luogo'][0]['tipo']), 
-         nome_luogo = str(lesson['intervallo'][0]['luogo'][0]['nome']), )
-         new_lesson.save() 
-       l = [str(lesson['nome']), str(lesson['intervallo'][0]['oraInizio' ]), str(lesson['intervallo'][0]['oraFine']), 
-       str(lesson['intervallo'][0]['luogo'][0]['tipo']), str(lesson['intervallo'][0]['luogo'][0]['nome'])  ] 
-       Lessons.append(l)
 
+      condition = Lesson.objects.filter(
+          data_lesson=date, 
+          nome=str(lesson['nome']),
+          ora_inizio=datetime.datetime.strptime(str(lesson['intervallo'][0]['oraInizio']), '%b %d, %Y %H:%M:%S')
+      ).exists()
+
+      if not condition: 
+        new_lesson = Lesson.objects.create(
+            data_lesson=date, nome=str(lesson['nome']),
+            ora_inizio=datetime.datetime.strptime(str(lesson['intervallo'][0]['oraInizio']), '%b %d, %Y %H:%M:%S'),
+            ora_fine=datetime.datetime.strptime(str(lesson['intervallo'][0]['oraFine']), '%b %d, %Y %H:%M:%S'),
+            id_edificio=str(lesson['intervallo'][0]['luogo'][0]['idEdificio']),
+            tipo_luogo=str(lesson['intervallo'][0]['luogo'][0]['tipo']),
+            nome_luogo=str(lesson['intervallo'][0]['luogo'][0]['nome']),
+        )
+        new_lesson.save() 
+
+      l = [
+          str(lesson['nome']), 
+          str(lesson['intervallo'][0]['oraInizio']), 
+          str(lesson['intervallo'][0]['oraFine']),
+          str(lesson['intervallo'][0]['luogo'][0]['tipo']), 
+          str(lesson['intervallo'][0]['luogo'][0]['nome'])
+      ] 
+      
+      Lessons.append(l)
+
+    #verifico che non abbia delle nuove office hours
     for office_hour in data['officehours']['value']:
-       new_id_edificio = ''
-       new_tipo_luogo = ''
-       new_nome_luogo = '' 
-       if not OfficeHour.objects.filter(data_officehour= date, nome = str(office_hour['nome']), 
-       ora_inizio = datetime.datetime.strptime(str(office_hour['intervallo'][0]['oraInizio']), '%b %d, %Y %H:%M:%S'),
-       ora_fine = datetime.datetime.strptime(str(office_hour['intervallo'][0]['oraFine']), '%b %d, %Y %H:%M:%S')).exists(): 
-         if "note" in office_hour:
-             new_note = str(office_hour['note'])
-         else:
-              new_note = ''
 
-         if len(office_hour['intervallo'][0]['luogo']) != 0:
-             new_id_edificio = str(office_hour['intervallo'][0]['luogo'][0]['idEdificio'])
-             new_tipo_luogo = str(office_hour['intervallo'][0]['luogo'][0]['tipo'])
-             new_nome_luogo = str(office_hour['intervallo'][0]['luogo'][0]['nome'])
-         else:
-             new_id_edificio = ''
-             new_tipo_luogo = ''
-             new_nome_luogo = ''
-         new_office_hour = OfficeHour.objects.create(data_officehour = date, nome = str(office_hour['nome']), note = new_note, 
-         ora_inizio = datetime.datetime.strptime(str(office_hour['intervallo'][0]['oraInizio']), '%b %d, %Y %H:%M:%S'), 
-         ora_fine = datetime.datetime.strptime(str(office_hour['intervallo'][0]['oraFine']), '%b %d, %Y %H:%M:%S'), 
-         id_edificio = new_id_edificio, 
-         tipo_luogo = new_tipo_luogo, 
-         nome_luogo = new_nome_luogo)
-         new_office_hour.save() 
+      #inizializzo
+      new_id_edificio = ''
+      new_tipo_luogo = ''
+      new_nome_luogo = '' 
 
-       o = [str(office_hour['nome']), str(office_hour['intervallo'][0]['oraInizio' ]), str(office_hour['intervallo'][0]['oraFine']), 
-       new_tipo_luogo, new_nome_luogo ] 
-       Officehours.append(o)
+      condition = OfficeHour.objects.filter(
+          data_officehour=date, 
+          nome=str(office_hour['nome']),
+          ora_inizio=datetime.datetime.strptime(str(office_hour['intervallo'][0]['oraInizio']), '%b %d, %Y %H:%M:%S'),
+          ora_fine=datetime.datetime.strptime(str(office_hour['intervallo'][0]['oraFine']), '%b %d, %Y %H:%M:%S')
+      ).exists()
+
+      if not condition: 
+        if "note" in office_hour:
+            new_note = str(office_hour['note'])
+        else:
+             new_note = ''
+
+        if len(office_hour['intervallo'][0]['luogo']) != 0:
+            new_id_edificio = str(office_hour['intervallo'][0]['luogo'][0]['idEdificio'])
+            new_tipo_luogo = str(office_hour['intervallo'][0]['luogo'][0]['tipo'])
+            new_nome_luogo = str(office_hour['intervallo'][0]['luogo'][0]['nome'])
+        else:
+            new_id_edificio = ''
+            new_tipo_luogo = ''
+            new_nome_luogo = ''
+        #creo il nuovo oggetto office hour
+        new_office_hour = OfficeHour.objects.create(
+          data_officehour = date, nome = str(office_hour['nome']), 
+          note = new_note, 
+          ora_inizio = datetime.datetime.strptime(str(office_hour['intervallo'][0]['oraInizio']), '%b %d, %Y %H:%M:%S'), 
+          ora_fine = datetime.datetime.strptime(str(office_hour['intervallo'][0]['oraFine']), '%b %d, %Y %H:%M:%S'), 
+          id_edificio = new_id_edificio, 
+          tipo_luogo = new_tipo_luogo, 
+          nome_luogo = new_nome_luogo
+        )
+        new_office_hour.save() 
+
+      o = [str(office_hour['nome']), str(office_hour['intervallo'][0]['oraInizio' ]), str(office_hour['intervallo'][0]['oraFine']), 
+      new_tipo_luogo, new_nome_luogo ] 
+      Officehours.append(o)
     return JsonResponse({'result': 'ok'})  
 
 def index(request): 
@@ -202,9 +250,27 @@ def detail_notice(request, primary_key):
 
     try:
         notice = Notice.objects.get(pk=primary_key)
-        print(primary_key)
-        print(notice.titolo)
     except Notice.DoesNotExist:
         raise Http404('Notice does not exist')
     
     return render(request, 'notice_detail.html', context={'notice': notice})
+
+
+def detail_lesson(request, primary_key):
+
+    try:
+        lesson = Lesson.objects.get(pk=primary_key)
+    except Notice.DoesNotExist:
+        raise Http404('Notice does not exist')
+
+    return render(request, 'lesson_detail.html', context={'lesson': lesson})
+
+
+def detail_office_hour(request, primary_key):
+
+    try:
+        office_hour = OfficeHour.objects.get(pk=primary_key)
+    except Notice.DoesNotExist:
+        raise Http404('Notice does not exist')
+
+    return render(request, 'office_hour_detail.html', context={'office_hour': office_hour})
