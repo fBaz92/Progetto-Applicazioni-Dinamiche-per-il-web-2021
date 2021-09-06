@@ -11,9 +11,9 @@
         </h2>
         <br>
         <form @submit.prevent="getUpdates">
-            <input type="date" v-model="date.day"/>
+            <input type="date" v-model="date.day" :max="maxDate"/>
             <button class="btn btn-primary" type="submit">Seleziona</button>
-         </form>
+        </form>
     </div>
     
     <br>
@@ -22,7 +22,7 @@
     <!--Avvisi-->
     <h3>Avvisi:</h3>
 
-    <div class="container" id="app">
+    <div class="container" id="app" aria-labelledby="Avvisi in dettaglio">
         <div class="row" v-if="updates[0].length">
             <div v-for="notice, index in updates[0]" class="col-md-3 col-6 my-1">
             <!--Qua metto le carte-->      
@@ -47,7 +47,7 @@
     <h3>Avvisi nascosti:</h3>
 
 
-    <div class="container" id="app">
+    <div class="container" id="app" aria-labelledby="Avvisi nascosti">
         <div class="row" v-if="updates[1].length">
             <div v-for="notice, index in updates[1]" class="col-md-3 col-6 my-1">
             <!--Qua metto le carte-->      
@@ -72,7 +72,7 @@
 
 <h3>Lezioni:</h3>
 
-    <div class="container" id="app">
+    <div class="container" id="app" aria-labelledby="Lezioni in dettaglio">
         <div class="row" v-if="updates[2].length">
             <div v-for="lesson, index in updates[2]" class="col-md-3 col-6 my-1">
             <!--Qua metto le carte-->      
@@ -94,7 +94,7 @@
 <br>
 <h3>Lezioni nascoste:</h3>
 
-    <div class="container" id="app">
+    <div class="container" id="app" aria-labelledby="Lezioni nascoste">
         <div class="row" v-if="updates[3].length">
             <div v-for="lesson, index in updates[3]" class="col-md-3 col-6 my-1">
             <!--Qua metto le carte-->      
@@ -117,13 +117,13 @@
 
 <h3>Ricevimenti:</h3>
 
-    <div class="container" id="app">
+    <div class="container" id="app" aria-labelledby="Ricevimenti in dettaglio" >
         <div class="row" v-if="updates[4].length">
             <div v-for="office_hour, index in updates[4]" class="col-md-3 col-6 my-1">
             <!--Qua metto le carte-->      
                 <div class="card">
                     <div class="card-body">
-                      <h5 class="card-title"></h5>
+                      <h5 class="card-title" aria-hidden="true"></h5>
                       <p class="card-text">[[office_hour.nome]]</p>
                       <p><a v-bind:href="'office_hour/'+ office_hour.id">Vedi dettaglio</a></p>
                       <button class="btn btn-primary" @click="hide(office_hour)">Nascondi</button>
@@ -139,7 +139,7 @@
 <br>
 <h3>Ricevimenti nascosti:</h3>
 
-    <div class="container" id="app">
+    <div class="container" id="app" aria-labelledby="Ricevimenti nascosti">
         <div class="row" v-if="updates[5].length">
             <div v-for="office_hour, index in updates[5]" class="col-md-3 col-6 my-1">
             <!--Qua metto le carte-->      

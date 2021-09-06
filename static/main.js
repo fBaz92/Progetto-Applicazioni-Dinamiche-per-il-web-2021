@@ -12,6 +12,7 @@ var app = new Vue({
         lessons: [],
         office_hours: [],
         date: {day:''}, 
+        maxDate: new Date().toISOString().split('T')[0]
     },
     methods: {
         

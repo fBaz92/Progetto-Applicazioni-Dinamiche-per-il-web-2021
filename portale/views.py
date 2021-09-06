@@ -262,7 +262,6 @@ def detail_lesson(request, primary_key):
         lesson = Lesson.objects.get(pk=primary_key)
     except Notice.DoesNotExist:
         raise Http404('Notice does not exist')
-
     return render(request, 'lesson_detail.html', context={'lesson': lesson})
 
 
