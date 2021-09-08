@@ -106,3 +106,14 @@ var app = new Vue({
         
     }
 })
+
+
+
+const input = document.querySelector('input');
+const log = document.getElementById('datepicker');
+
+input.onkeydown = logKey;
+
+function logKey(e) {
+  log.textContent += ` ${e.code}`;
+}

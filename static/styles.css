@@ -1,13 +1,28 @@
+a {
+  color: #056674;
+}
+
+a:hover,
+a:focus {
+  color: #ff4b5c;
+  text-decoration: none;
+}
+
+a:active {
+  color: #000000;
+  background-color: #ff4b5c;
+}
+
 /*base.html*/
 .body-class{
-  background-color: #F9F7F7;
+  background-color: #F7F6F2;
   font-family: Ubuntu, Arial, Helvetica, sans-serif;
   font-size: large;
 }
 
 /*login.html*/
 .container-login{
-  background-color: #DBE2EF;
+  background-color: #F0E5CF;
   margin-top: 30%;
   border-radius: 15px;
 }
@@ -20,10 +35,14 @@
   padding: 0 0 3% 0;
 }
 
+
+.form-text{
+  color: black;
+}
 /*register*/
 
 .container-register {
-  background-color: #DBE2EF;
+  background-color: #F0E5CF;
   margin-top: 15%;
   border-radius: 15px;
 }
@@ -35,14 +54,18 @@
 /*user*/
 
 .container-user{
-  background-color: #DBE2EF;
+  background-color: #F0E5CF;
   border-radius: 15px;
   padding: 3% 0 3% 0;
 }
 
 
 .detail-container{
-  background-color: #DBE2EF;
+  background-color: #F0E5CF;
   margin-top: 30%;
   border-radius: 15px;
+}
+
+.form-data:focus{
+  color:#ff4b5c;  
 }
