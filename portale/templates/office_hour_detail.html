@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="container container-login">
+    <div class="container container-login" id="app">
         <div class="card mt-auto mb-auto">
             <div class="card-body">
                 <h5 class="card-title">{{ office_hour.nome }}</h5>
                 <h6 class="card-subtitle mb-2 text-muted">Il giorno {{ office_hour.ora_inizio|date:"l d F " }} dalle ore {{ office_hour.ora_inizio|date:"H:i" }} alle ore {{ office_hour.ora_fine|date:"H:i" }}</h6>
-                <p class="card-text">Luogo: {{ office_hour.tipo_luogo }}</p>
+                <p class="card-text">{{ office_hour.tipo_luogo }} {{ office_hour.nome_luogo }} edificio {{ office_hour.id_edificio }} </p>
+                <p><a v-bind:href="'/user/'+ user_name.username">Torna al menu principale</a></p>
             </div>
         </div>
     </div>

@@ -1,16 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="col-6 mx-auto mt-5">
-    <div class="container detail-container">
-        <div class="card">
-            <div class="card-body">
+
+    <div class="container col-6 mx-auto mt-5" id="app" aria-labelledby="Avvisi in dettaglio">
+        <div class="row">
+            <div class="card">
                 <h5 class="card-title">{{ notice.titolo }}</h5>
                 <h6 class="card-subtitle mb-2 text-muted">Data pubblicazione: {{ notice.data_pubblicazione }}</h6>
                 <p class="card-text">{{ notice.testo }}</p>
                 <p class="card-text">Da: {{ notice.mittenti }}</p>
+                <p><a v-bind:href="'/user/'+ user_name.username">Torna al menu principale</a></p>
             </div>
         </div>
     </div>
-</div>
+
 {% endblock %}
