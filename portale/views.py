@@ -1,4 +1,4 @@
-from django.http.response import JsonResponse
+from django.http.response import Http404, JsonResponse 
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -11,6 +11,7 @@ import datetime
 from datetime import date
 from django.middleware.csrf import get_token
 import html
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def GetUpdates(request):
@@ -177,8 +178,16 @@ def register(request):
      else:
          return render(request,'register.html')
 
+
 def user(request, username):
-    return render(request, 'user.html', {'username': username})
+  if request.user.is_authenticated:
+    if request.user.username == username :
+      return render(request, 'user.html', {'username': username})
+    else:
+      return redirect('Login')
+
+
+
 
 def LoadUpdates(request):
     username = None
