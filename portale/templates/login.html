@@ -1,28 +1,26 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="col-6 mx-auto mt-5">
+<main class="col-6 mx-auto mt-5">
   <Title>Login</Title>
 	<form method="POST" action="login">{% csrf_token %}
-
-		<div class="container container-login" role="form" aria-label="Login form">
-			<div class="mb-3 login-username"
-				name="sezione nome utente">
-			  	<label for="LogInNomeUtente" class="form-label">Nome Utente</label>
-			  	<input type="text" name="username" class="form-control" id="LogInNomeUtente" aria-required="true" placeholder="Inserisci il tuo nome utente" role="button">
+		<div class="container container-login">
+			<div class="mb-3 login-username">
+			  	<label for="username" class="form-label">Nome Utente</label>
+			  	<input type="text" name="username" class="form-control" id="username" aria-required="true" aria-describedby="username-descr">
+				<p class="username-descr">Inserisci qui il tuo nome utente</p>
 			</div>
-			<div class="mb-3 "
-				name="sezione password">
-			  	<label for="UserNameHelp" class="form-label">Password</label>
-			  	<input type="password" name="password" class="form-control" id="UserNameHelp" aria-required="true"  placeholder="Inserisci la tua password">
+			<div class="mb-3 ">
+			  	<label for="login-password" class="form-label">Password</label>
+			  	<input type="password" name="password" class="form-control" id="login-password" aria-required="true"  aria-describedby="password-descr">
+				<p class="password-descr">Inserisci qui la tua password</p>
 			</div>
 			<button 
 			  	type="submit" 
 			  	class="btn btn-primary"
-				data-message="Clicca su questo tasto per accedere"
+				aria-label="accedi"
 			>   
 			  	Accedi
-			
 			</button>
 			<div class="mb-3 login-register">
 			  <div class="text-center">
@@ -31,6 +29,6 @@
 			</div>
 		</div>
 	</form>
-</div>
+</main>
 
 {% endblock %}

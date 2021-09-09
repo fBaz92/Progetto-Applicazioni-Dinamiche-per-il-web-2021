@@ -59,6 +59,7 @@ var app = new Vue({
                     body: JSON.stringify(this.date)
                 }
             );
+            
             var response = await this.loadUpdates();
             this.updates = await response.json()
         },

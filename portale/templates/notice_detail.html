@@ -2,16 +2,17 @@
 
 {% block content %}
 
-    <div role="dettaglio" class="container col-6 mx-auto mt-5" id="app">
+    <main class="container col-6 mx-auto mt-5" id="app">
         <div class="row">
             <div class="card">
-                <h5 class="card-title">{{ notice.titolo }}</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Data pubblicazione: {{ notice.data_pubblicazione }}</h6>
+                <h1 class="card-title">{{ notice.titolo }}</h1>
+                <h2 class="card-subtitle mb-2 text-muted">Data pubblicazione: {{ notice.data_pubblicazione }}</h2>
                 <p class="card-text">{{ notice.testo }}</p>
                 <p class="card-text">Da: {{ notice.mittenti }}</p>
                 <p><a v-bind:href="'/user/'+ user_name.username" tabindex=0>Torna al menu principale</a></p>
             </div>
         </div>
-    </div>
+
+    </main>
 
 {% endblock %}

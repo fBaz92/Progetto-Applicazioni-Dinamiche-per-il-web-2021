@@ -1,30 +1,30 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="col-6 mx-auto mt-5">
+<main class="col-6 mx-auto mt-5">
   <Title>Register</Title>
     <div class="container container-register">
       <form method="POST" action="register">
         {% csrf_token %}
               <div class="mb-3 register-username">
                 <label for="RegisterNomeUtente" class="form-label">Nome Utente</label>
-                <input type="text" name="username" class="form-control" id="RegisterNomeUtente" aria-describedby="UserNameHelp">
-                <div id="UserNameHelp" class="form-text">Inserisci il tuo nome utente</div>
+                <input type="text" name="username" class="form-control" id="RegisterNomeUtente" aria-required="true" aria-describedby="username-descr">
+                <p class="username-descr">Inserisci qui il tuo nome utente</p>
               </div>
               <div class="mb-3 ">
                 <label for="RegisterEMail" class="form-label">e-mail</label>
-                <input type="email" name="email" class="form-control" id="RegisterEmail" aria-describedby="EmailHelp">
-                <div id="EmailHelp" class="form-text">Inserisci la tua e-mail</div>
+                <input type="email" name="email" class="form-control" id="RegisterEmail" aria-required="true" aria-describedby="email-descr">
+                <p class="email-descr">Inserisci qui la tua mail</p>
               </div>
               <div class="mb-3 ">
                 <label for="RegisterPassword" class="form-label">Password</label>
-                <input type="password" name="password" class="form-control" id="RegisterPassword" aria-describedby="PasswordHelp">
-                <div id="PasswordHelp" class="form-text">Inserisci la password</div>
+                <input type="password" name="password" class="form-control" id="RegisterPassword" aria-required="true" aria-describedby="passw-descr">
+                <p class="passw-descr">Inserisci qui la tua password</p>
               </div>
               <div class="mb-3 ">
-                <label for="RegisterPassword" class="form-label">Reinserisci la password</label>
-                <input type="password" name="password2" class="form-control" id="RegisterPassword" aria-describedby="PasswordHelp">
-                <div id="PasswordHelp" class="form-text">Inserisci nuovamente la password</div>
+                <label for="RegisterPassword2" class="form-label">Reinserisci la password</label>
+                <input type="password" name="password2" class="form-control" id="RegisterPassword2" aria-required="true" aria-describedby="passw2-descr">
+                <p class="passw2-descr">Inserisci nuovamente la tua password</p>
               </div>
               <button type="submit" class="btn btn-primary">Accedi</button>
               <div class="mb-3 login-register">
@@ -34,5 +34,5 @@
               </div>
       </form>
     </div>
-</div>
+</mian>
 {% endblock %}
