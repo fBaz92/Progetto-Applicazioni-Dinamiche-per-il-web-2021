@@ -12,8 +12,18 @@ var app = new Vue({
         lessons: [],
         office_hours: [],
         date: {day:''}, 
-        maxDate: new Date().toISOString().split('T')[0]
+        maxDate: new Date().toISOString().split('T')[0],
+        
     },
+
+    computed:{
+        
+        filterNoticesById: function(notice_id){
+                return this.notices.filter(notice => !notice.id.indexOf(notice_id))    
+        },
+        
+    },
+
     methods: {
         
         async getCsrfToken(){
@@ -98,7 +108,9 @@ var app = new Vue({
             });
             await this.loadUpdates()
                         
-        },     
+        }, 
+        
+        
 
     },
     async created(){
@@ -106,14 +118,3 @@ var app = new Vue({
         
     }
 })
-
-
-
-const input = document.querySelector('input');
-const log = document.getElementById('datepicker');
-
-input.onkeydown = logKey;
-
-function logKey(e) {
-  log.textContent += ` ${e.code}`;
-}

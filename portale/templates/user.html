@@ -3,104 +3,95 @@
 {% block content %}
 <main id="app">
     
-        <div class="container text-center justify-content-center container-user" role="form" aria-label="Form di scelta della data degli avvisi, lezioni e ricevimenti">
-            <h1 class="text-center">Ciao <span v-model="user_name">{{username}}</span></h1>
-            <br>
-            <h2 >
-                Seleziona la data: [[date.day]] 
-            </h2>
-            <br>
-            <form @submit.prevent="getUpdates" class="form-data" tabindex=0>
-                <label id="datepickerLabel" for="datepicker">Inserisci la data di cui vuoi caricare i risultati</label><br>
-                <input type="date" v-model="date.day" :max="maxDate" id="datepicker"/>
-                <button class="btn btn-primary" type="submit">Seleziona</button>
-            </form>
-        </div>
-        
+    <header class="container text-center justify-content-center container-user" aria-label="Form di scelta della data degli avvisi, lezioni e ricevimenti">
+        <h1 class="text-center">Ciao <span v-model="user_name">{{username}}</span></h1>
         <br>
-        <h2>Aggiornamenti odierni</h2>
+        <h2 >
+            Seleziona la data: [[date.day]] 
+        </h2>
         <br>
+        <form @submit.prevent="getUpdates" class="form-data" tabindex=0>
+            <label id="datepickerLabel" for="datepicker">Inserisci la data di cui vuoi caricare i risultati</label><br>
+            <input type="date" v-model="date.day" :max="maxDate" id="datepicker"/>
+            <button class="btn btn-primary" type="submit">Seleziona</button>
+        </form>
+        <br>
+        <p><a href="\logout" tabindex=0>Esci dal portale</a></p>
+    </header>
+    
+    <br>
+    <h2>Aggiornamenti odierni</h2>
+    <br>
+
+    <article id="aggiornamenti">
         <!--Avvisi-->
         <h3>Avvisi:</h3>
-    
-            <section aria-live="assertive" role="list">
-                <div class="container" id="app" >
-                    <div class="row" v-if="updates[0].length">
-    
-                        <div v-for="notice, index in updates[0]" class="col-md-3 col-6 my-1">
-    
-                        <!--Qua metto le carte-->      
-                            <div class="card" role="listitem">
-                                <div class="card-body">
-                                  <h4 class="card-title">[[notice.titolo]]</h4>
-                                  <p><a v-bind:href="'notices/'+ notice.id" tabindex=0>Vedi dettaglio</a></p>
-                                  <button class="btn btn-primary" @click="hide(notice)" tabindex=0>Nascondi</button>
-                                </div>
-                            </div>
+        <div class="container"  >
+            <div class="row" v-if="updates[0].length">
+                <div v-for="notice, index in updates[0]" class="col-md-3 col-6 my-1">
+                <!--Qua metto le carte-->      
+                    <div class="card">
+                        <div class="card-body">
+                          <h4 class="card-title">[[notice.titolo]]</h4>
+                          <p><a v-bind:href="'notices/'+ notice.id" tabindex=0>Vedi dettaglio</a></p>
+                          <button class="btn btn-primary" @click="hide(notice)" tabindex=0>Nascondi</button>
                         </div>
                     </div>
-                    <div class="row" v-else>
-                        Nessun nuovo avviso oggi 
-                    </div>
                 </div>
-            </section>
-    
+            </div>
+            <div class="row" v-else>
+                Nessun nuovo avviso oggi 
+            </div>
+        </div>
         <br>
-    
-    
+
         <h3>Avvisi nascosti:</h3>
-    
-        
-            <div class="container" id="app">
-                <div class="row" v-if="updates[1].length">
-                    <div v-for="notice, index in updates[1]" class="col-md-3 col-6 my-1">
-                    <!--Qua metto le carte-->      
-                        <div class="card">
-                            <div class="card-body">
-                              <h4 class="card-title">[[notice.titolo]]</h4>
-                              <button class="btn btn-primary" @click="retrive(notice)" tabindex=0>Ripristina</button>
-                            </div>
+        <div class="container" >
+            <div class="row" v-if="updates[1].length">
+                <div v-for="notice, index in updates[1]" class="col-md-3 col-6 my-1">
+                <!--Qua metto le carte-->      
+                    <div class="card">
+                        <div class="card-body">
+                          <h4 class="card-title">[[notice.titolo]]</h4>
+                          <button class="btn btn-primary" @click="retrive(notice)" tabindex=0>Ripristina</button>
                         </div>
                     </div>
                 </div>
-                <div class="row" v-else>
-                    Nessun avviso nascosto oggi 
-                </div>
             </div>
-        
-    
-    
+            <div class="row" v-else>
+                Nessun avviso nascosto oggi 
+            </div>
+        </div>
         <br>
-        <br>
-    
-    <h3>Lezioni:</h3>
-        <section aria-live="assertive">
-            <div class="container" id="app">
-                <div class="row" v-if="updates[2].length">
-                    <div v-for="lesson, index in updates[2]" class="col-md-3 col-6 my-1">
-                    <!--Qua metto le carte-->      
-                        <div class="card" role="listitem">
-                            <div class="card-body">
-                              <h4 class="card-title">[[lesson.nome]]</h4>
-                              <p><a v-bind:href="'lesson/'+ lesson.id" tabindex=0>Vedi dettaglio</a></p>
-                              <button class="btn btn-primary" @click="hide(lesson)" tabindex=0>Nascondi</button>
-                            </div>
+    </article>
+
+    <article id="lezioni">
+        <h3>Lezioni:</h3>
+        <div class="container" >
+            <div class="row" v-if="updates[2].length">
+                <div v-for="lesson, index in updates[2]" class="col-md-3 col-6 my-1">
+                <!--Qua metto le carte-->      
+                    <div class="card">
+                        <div class="card-body">
+                          <h4 class="card-title">[[lesson.nome]]</h4>
+                          <p><a v-bind:href="'lesson/'+ lesson.id" tabindex=0>Vedi dettaglio</a></p>
+                          <button class="btn btn-primary" @click="hide(lesson)" tabindex=0>Nascondi</button>
                         </div>
                     </div>
                 </div>
-                <div class="row" v-else>
-                    Nessuna lezione oggi 
-                </div>
             </div>
-        </section>
-    <br>
-    <h3>Lezioni nascoste:</h3>
-    
-        <div class="container" id="app">
+            <div class="row" v-else>
+                Nessuna lezione oggi 
+            </div>
+        </div>
+        <br>
+        
+        <h3>Lezioni nascoste:</h3>
+        <div class="container" >
             <div class="row" v-if="updates[3].length">
                 <div v-for="lesson, index in updates[3]" class="col-md-3 col-6 my-1">
                 <!--Qua metto le carte-->      
-                    <div class="card" role="listitem">
+                    <div class="card">
                         <div class="card-body">
                           <h4 class="card-title">[[lesson.nome]]</h4>
                           <button class="btn btn-primary" @click="retrive(lesson)" tabindex=0>Ripristina</button>
@@ -112,17 +103,16 @@
                 Nessuna lezione oggi 
             </div>
         </div>
+        <br>
+    </article>
     
-    <br>
-    <br>
-    
-    <h3>Ricevimenti:</h3>
-    
-        <div class="container" id="app" role="list">
+    <article id="ricevimenti">
+        <h3>Ricevimenti:</h3>
+        <div class="container" >
             <div class="row" v-if="updates[4].length">
                 <div v-for="office_hour, index in updates[4]" class="col-md-3 col-6 my-1">
                 <!--Qua metto le carte-->      
-                    <div class="card" role="listitem">
+                    <div class="card">
                         <div class="card-body">
                           <h4 class="card-title">[[office_hour.nome]]</h4>
                           <p><a v-bind:href="'office_hour/'+ office_hour.id" tabindex=0>Vedi dettaglio</a></p>
@@ -135,15 +125,13 @@
                 Nessun ricevimento oggi  
             </div>
         </div>
-    
-    <br>
-    <h3>Ricevimenti nascosti:</h3>
-    
-        <div class="container" id="app">
+        <br>
+        <h3>Ricevimenti nascosti:</h3>
+        <div class="container" >
             <div class="row" v-if="updates[5].length">
                 <div v-for="office_hour, index in updates[5]" class="col-md-3 col-6 my-1">
                 <!--Qua metto le carte-->      
-                    <div class="card" role="listitem">
+                    <div class="card">
                         <div class="card-body">
                           <h4 class="card-title">[[office_hour.nome]]</h4>
                           <button class="btn btn-primary" @click="retrive(office_hour)" tabindex=0>Ripristina</button>
@@ -155,8 +143,8 @@
                 Nessun ricevimento nascosto oggi 
             </div>
         </div>
-    
-    <br>
+        <br>
+    </article>
 </main>
 {% endblock %}
 
