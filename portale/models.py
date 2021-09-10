@@ -46,5 +46,4 @@ class Student(AbstractUser):
       notice = models.ManyToManyField(Notice, help_text='notices selected by a user',)
       lesson = models.ManyToManyField(Lesson, help_text='notices selected by a user',)
       office_hour = models.ManyToManyField(OfficeHour, help_text='notices selected by a user',)
-      xxx = models.CharField(max_length=100)
 
